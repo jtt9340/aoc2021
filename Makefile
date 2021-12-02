@@ -1,11 +1,11 @@
 DEBUG=
-#Uncomment the below line to dispaly the runner debug
+#Uncomment the below line to display the runner debug
 #DEBUG+= -DDEBUG_RUNNER
 #Template for other debug flags to be added later
 #DEBUG+- -DDEBUG_OTHER
 
 #If adding another include directory, be sure to add it here
-CPPFLAGS=-g ${DEBUG} -Iinclude/common -Iinclude/runner -Iinclude/solutions
+CPPFLAGS=-g -std=c++14 ${DEBUG} -Iinclude/common -Iinclude/runner -Iinclude/solutions
 
 .DEFAULT_GOAL := all
 
@@ -70,6 +70,7 @@ bin/aoc: build/aoc.o  \
 	bin/lib/libsolutions.a
 	g++ ${CPPFLAGS} -o bin/aoc build/aoc.o -Lbin/lib -lsolutions -lrunner
 
+.PHONY: clean
 clean:
 	rm -f build/runner/aoc_test.o  \
 	build/runner/aoc_tests.o  \
@@ -82,6 +83,7 @@ clean:
 	bin/lib/libsolutions.a  \
 	bin/aoc
 
+.PHONY: all
 all: build/runner/aoc_test.o  \
 	build/runner/aoc_tests.o  \
 	build/runner/file_utils.o  \

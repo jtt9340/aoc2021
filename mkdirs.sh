@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-mkdir -p build/runner build/solutions
-mkdir -p bin/lib
+mkdir -p -v build/runner build/solutions
+mkdir -p -v bin/lib

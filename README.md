@@ -1,4 +1,12 @@
-# advent-of-code-cpp-starter
+# AoC 2021
+Not to be confused with [Alexandria Ocasio-Cortez](https://en.wikipedia.org/wiki/Alexandria_Ocasio-Cortez), these are my solutions to the 2021
+[Advent of Code](https://adventofcode.com/), an advent calendar where you get programming problems instead of chocolates.
+
+The solutions will be in C++ and this repository is graciously generated from [bcooperstl](https://github.com/bcooperstl)'s
+[advent-of-code-cpp-starter](https://github.com/bcooperstl/advent-of-code-cpp-starter). The following is the README associated with that repository.
+
+---
+
 This is a simple C++ runner for doing Advent-of-Code challenges. It's designed to have one executable which is given parameters for the day and part, and then it will run that particular solution.
 
 It's designed for C++ under Linux. I've tested it with CentOS 8 and GCC version 8.3.1.

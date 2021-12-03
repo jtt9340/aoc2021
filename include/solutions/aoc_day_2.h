@@ -1,4 +1,3 @@
-#include <array>
 #include <memory>
 
 #ifndef __AOC_DAY_2__
@@ -6,38 +5,74 @@
 
 #include "aoc_day.h"
 
-using Coordinate = array<unsigned, 2>;
+struct Coordinate
+{
+	unsigned horizontal_pos{0}, depth{0}, aim{0};
+};
 
 struct Instruction
 {
-	Coordinate::value_type magnitude;
+	unsigned magnitude;
 
-	explicit Instruction(Coordinate::value_type magnitude);
+	explicit Instruction(unsigned magnitude);
 
-	virtual Coordinate operator()(Coordinate coordinate);
-
-	static unique_ptr<Instruction> parse(string &line);
+	virtual const Coordinate operator()(const Coordinate coordinate) const;
 };
 
-struct Forward : public Instruction
+struct SimpleInstruction : Instruction
 {
-	explicit Forward(Coordinate::value_type magnitude);
+	explicit SimpleInstruction(unsigned magnitude);
 
-	Coordinate operator()(Coordinate coordinate) override;
+	static unique_ptr<SimpleInstruction> parse(const string &line);
 };
 
-struct Down : public Instruction
+struct SimpleForward : public SimpleInstruction
 {
-	explicit Down(Coordinate::value_type magnitude);
+	explicit SimpleForward(unsigned magnitude);
 
-	Coordinate operator()(Coordinate coordinate) override;
+	const Coordinate operator()(const Coordinate coordinate) const override;
 };
 
-struct Up : public Instruction
+struct SimpleDown : public SimpleInstruction
 {
-	explicit Up(Coordinate::value_type magnitude);
+	explicit SimpleDown(unsigned magnitude);
 
-	Coordinate operator()(Coordinate coordinate) override;
+	const Coordinate operator()(const Coordinate coordinate) const override;
+};
+
+struct SimpleUp : public SimpleInstruction
+{
+	explicit SimpleUp(unsigned magnitude);
+
+	const Coordinate operator()(const Coordinate coordinate) const override;
+};
+
+struct AimingInstruction : Instruction
+{
+	explicit AimingInstruction(unsigned magnitude);
+
+	static unique_ptr<AimingInstruction> parse(const string &line);
+};
+
+struct AimingForward : public AimingInstruction
+{
+	explicit AimingForward(unsigned magnitude);
+
+	const Coordinate operator()(const Coordinate coordinate) const override;
+};
+
+struct AimingDown : public AimingInstruction
+{
+	explicit AimingDown(unsigned magnitude);
+
+	const Coordinate operator()(const Coordinate coordinate) const override;
+};
+
+struct AimingUp : public AimingInstruction
+{
+	explicit AimingUp(unsigned magnitude);
+
+	const Coordinate operator()(const Coordinate coordinate) const override;
 };
 
 class AocDay2 : public AocDay
@@ -48,6 +83,7 @@ class AocDay2 : public AocDay
 		AocDay2();
 		~AocDay2();
 		string part1(string filename, vector<string> extra_args) override;
+		string part2(string filename, vector<string> extra_args) override;
 };
 
 #endif

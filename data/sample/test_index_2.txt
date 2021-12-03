@@ -1,2 +1,4 @@
 2,1,test_cases/day2_test1.txt,150
 2,1,test_cases/day2_test2.txt,1580000
+2,2,test_cases/day2_test1.txt,900
+2,2,test_cases/day2_test2.txt,1251263225

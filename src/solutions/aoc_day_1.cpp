@@ -10,7 +10,7 @@ static unsigned count_increases(const vector<long>::const_iterator cur,
 {
 	return cur == end || cur + 1 == end
 		? increases
-		: count_increases(cur + 1, end, increases + (*cur < *(cur + 1)))
+		: count_increases(cur + 1, end, increases + (cur[0] < cur[1]))
 		;
 }
 
@@ -63,6 +63,7 @@ vector<long> AocDay1::read_input(string filename)
 	if (input.bad())
 		cerr << "Error reading in the data from " << filename << endl;
 	
+	input.close();
 	return depths;
 }
 

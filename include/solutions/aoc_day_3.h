@@ -9,6 +9,7 @@ class AocDay3 : public AocDay
 		AocDay3();
 		~AocDay3();
 		string part1(string filename, vector<string> extra_args) override;
+		string part2(string filename, vector<string> extra_args) override;
 };
 
 #endif

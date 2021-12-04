@@ -44,7 +44,7 @@ vector<long> AocDay1::read_input(string filename)
 	}
 
 	string depth_s;
-#ifdef DEBUG_RUNNER
+#ifdef DEBUG_OTHER
 	try
 	{
 		while (getline(input, depth_s))

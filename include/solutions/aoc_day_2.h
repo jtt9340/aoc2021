@@ -77,8 +77,6 @@ struct AimingUp : public AimingInstruction
 
 class AocDay2 : public AocDay
 {
-	private:
-		vector<long> read_input(string filename);
 	public:
 		AocDay2();
 		~AocDay2();

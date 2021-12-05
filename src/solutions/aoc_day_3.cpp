@@ -50,7 +50,7 @@ static unsigned long get_rating(const vector<unsigned long> &report, const strin
 
 AocDay3::AocDay3():AocDay(3)
 {
-};
+}
 
 AocDay3::~AocDay3()
 {

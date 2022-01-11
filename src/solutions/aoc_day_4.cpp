@@ -13,9 +13,7 @@ constexpr BingoBoard::board_mask BingoBoard::bitset_mask;
 
 BingoBoard::BingoBoard()
 {
-	fill(board.begin() + 1, board.begin() + 6, 0);
-	for (auto i = 0; i < BingoBoard::cols; i++)
-		board.at(BingoBoard::cols * i) = 0;
+	fill(board.begin(), board.end(), 0);
 }
 
 BingoBoard::reference BingoBoard::operator()(BingoBoard::size_type row, BingoBoard::size_type col)
@@ -30,7 +28,6 @@ BingoBoard::const_reference BingoBoard::operator()(BingoBoard::size_type row, Bi
 
 bool BingoBoard::mark(BingoBoard::value_type num)
 {
-	assert(num >= 0);
 	for (auto i = 0; i < BingoBoard::rows; i++)
 	{
 		for (auto j = 0; j < BingoBoard::cols; j++)
@@ -74,7 +71,7 @@ bool BingoBoard::won_cols() const
 	}
 
 	for (size_t row = 0; row < BingoBoard::rows; row++)
-		if (((transpose << (row * BingoBoard::cols)) & BingoBoard::bitset_mask).all())
+		if (((transpose << (row * BingoBoard::cols)) & BingoBoard::bitset_mask) == BingoBoard::bitset_mask)
 			return true;
 
 	return false;
@@ -197,6 +194,33 @@ BingoBoard::value_type BingoGame::play(const vector<BingoBoard::value_type> &num
 	return -1; // Intentionally wraps around to large number
 }
 
+BingoBoard::value_type BingoGame::play_until_end(const vector<BingoBoard::value_type> &numbers)
+{
+	BingoBoard::value_type score = -1; // Intentionally wraps around to large number
+	for (auto &num : numbers)
+	{
+#ifdef DEBUG_OTHER
+		cout << "Called " << num << '\n'
+		     << *this << "\n=====================\n\n";
+#endif
+		mark(num);
+		for (auto board = begin(); board != end();)
+		{
+			if (board->won())
+			{
+				score = board->score(num);
+				board = boards.erase(board);
+			}
+			else
+			{
+				board++;
+			}
+		}
+	}
+
+	return score;
+}
+
 ostream &operator<<(ostream &out, BingoGame &curr)
 {
 	for (auto it = curr.boards.begin(); it != curr.boards.end(); it++)
@@ -253,4 +277,32 @@ string AocDay4::part1(string filename, vector<string> extra_args)
 	input >> game;
 	// return to_string(game.play(bingo_numbers.begin(), bingo_numbers.end()));
 	return to_string(game.play(bingo_numbers));
+}
+
+string AocDay4::part2(string filename, vector<string> extra_args)
+{
+	ifstream input{filename};
+	string numbers_s;
+	vector<BingoBoard::value_type> bingo_numbers;
+
+	getline(input, numbers_s);
+#ifdef DEBUG_OTHER
+	cout << "Read in " << numbers_s << endl;
+#endif
+	string::size_type pos = 0;
+	for (;;)
+	{
+		const auto comma_index = numbers_s.find(',', pos);
+		if (comma_index == string::npos)
+			break;
+		bingo_numbers.push_back(stoi(numbers_s.substr(pos, comma_index)));
+#ifdef DEBUG_OTHER
+		cout << "Bingo number " << bingo_numbers.back() << " (pos is " << pos << ')' << endl;
+#endif
+		pos = comma_index + 1;
+	}
+
+	BingoGame game;
+	input >> game;
+	return to_string(game.play_until_end(bingo_numbers));
 }

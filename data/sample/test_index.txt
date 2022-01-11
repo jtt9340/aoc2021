@@ -27,3 +27,6 @@
 3,2,test_cases/day3_test1.txt,230
 3,2,test_cases/day3_test2.txt,4636702
 4,1,test_cases/day4_test1.txt,4512
+4,1,test_cases/day4_test2.txt,63552
+4,2,test_cases/day4_test1.txt,1924
+4,2,test_cases/day4_test2.txt,9020

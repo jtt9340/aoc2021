@@ -64,6 +64,7 @@ public:
 	// template <class InputIt>
 	// BingoBoard::value_type play(InputIt first, InputIt last);
 	BingoBoard::value_type play(const vector<BingoBoard::value_type> &numbers);
+	BingoBoard::value_type play_until_end(const vector<BingoBoard::value_type> &numbers);
 
 	friend ostream &operator<<(ostream &out, BingoGame &curr);
 	friend istream &operator>>(istream &in, BingoGame &curr);
@@ -78,6 +79,7 @@ public:
 	AocDay4();
 	~AocDay4();
 	string part1(string filename, vector<string> extra_args) override;
+	string part2(string filename, vector<string> extra_args) override;
 };
 
 #endif

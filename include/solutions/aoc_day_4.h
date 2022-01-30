@@ -78,8 +78,8 @@ class AocDay4 : public AocDay
 public:
 	AocDay4();
 	~AocDay4();
-	string part1(string filename, vector<string> extra_args) override;
-	string part2(string filename, vector<string> extra_args) override;
+	string part1(string &filename, vector<string> &extra_args) override;
+	string part2(string &filename, vector<string> &extra_args) override;
 };
 
 #endif

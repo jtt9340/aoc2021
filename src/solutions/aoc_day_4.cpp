@@ -247,7 +247,7 @@ AocDay4::~AocDay4()
 {
 }
 
-string AocDay4::part1(string filename, vector<string> extra_args)
+string AocDay4::part1(string &filename, vector<string> &extra_args)
 {
 #ifdef DEBUG_OTHER
 	cout << "Hello Day 4 Part 1" << endl;
@@ -279,7 +279,7 @@ string AocDay4::part1(string filename, vector<string> extra_args)
 	return to_string(game.play(bingo_numbers));
 }
 
-string AocDay4::part2(string filename, vector<string> extra_args)
+string AocDay4::part2(string &filename, vector<string> &extra_args)
 {
 	ifstream input{filename};
 	string numbers_s;

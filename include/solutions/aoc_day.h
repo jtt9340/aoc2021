@@ -20,8 +20,8 @@ class AocDay
     public:
         AocDay(int day);
         ~AocDay();
-        virtual string part1(string filename, vector<string> extra_args);
-        virtual string part2(string filename, vector<string> extra_args);
+        virtual string part1(string &filename, vector<string> &extra_args);
+        virtual string part2(string &filename, vector<string> &extra_args);
 };
 
 #endif

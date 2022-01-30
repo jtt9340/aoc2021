@@ -6,12 +6,12 @@
 class AocDay0 : public AocDay
 {
     private:
-        vector<long> read_input(string filename);
+        vector<long> read_input(string &filename);
     public:
         AocDay0();
         ~AocDay0();
-        string part1(string filename, vector<string> extra_args);
-        string part2(string filename, vector<string> extra_args);
+        string part1(string &filename, vector<string> &extra_args) override;
+        string part2(string &filename, vector<string> &extra_args) override;
 };
 
 

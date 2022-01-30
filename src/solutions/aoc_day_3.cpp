@@ -56,7 +56,7 @@ AocDay3::~AocDay3()
 {
 }
 
-string AocDay3::part1(string filename, vector<string> extra_args)
+string AocDay3::part1(string &filename, vector<string> &extra_args)
 {
 	vector<bool> report;
 	string::size_type line_len;
@@ -115,7 +115,7 @@ string AocDay3::part1(string filename, vector<string> extra_args)
 	return to_string(gamma * epsilon);
 }
 
-string AocDay3::part2(string filename, vector<string> extra_args)
+string AocDay3::part2(string &filename, vector<string> &extra_args)
 {
 	vector<unsigned long> report;
 	string::size_type line_len;

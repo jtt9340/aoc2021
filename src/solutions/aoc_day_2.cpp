@@ -8,7 +8,7 @@ using namespace std;
 template <class T>
 static string run_submarine_program(string &filename, vector<string> &extra_args)
 {
-	Coordinate pos;
+	SubmarineCoordinate pos;
 	ifstream input{filename};
 	if (!input)
 	{
@@ -40,7 +40,7 @@ Instruction::Instruction(unsigned magnitude):magnitude(magnitude)
 {
 }
 
-const Coordinate Instruction::operator()(const Coordinate coordinate) const
+const SubmarineCoordinate Instruction::operator()(const SubmarineCoordinate coordinate) const
 {
 	return coordinate;
 }
@@ -99,9 +99,9 @@ SimpleForward::SimpleForward(unsigned magnitude):SimpleInstruction(magnitude)
 {
 }
 
-const Coordinate SimpleForward::operator()(const Coordinate coordinate) const
+const SubmarineCoordinate SimpleForward::operator()(const SubmarineCoordinate coordinate) const
 {
-	Coordinate new_coordinate{coordinate};
+	SubmarineCoordinate new_coordinate{coordinate};
 	new_coordinate.horizontal_pos += magnitude;
 	return new_coordinate;
 }
@@ -110,9 +110,9 @@ SimpleDown::SimpleDown(unsigned magnitude):SimpleInstruction(magnitude)
 {
 }
 
-const Coordinate SimpleDown::operator()(const Coordinate coordinate) const
+const SubmarineCoordinate SimpleDown::operator()(const SubmarineCoordinate coordinate) const
 {
-	Coordinate new_coordinate{coordinate};
+	SubmarineCoordinate new_coordinate{coordinate};
 	new_coordinate.depth += magnitude;
 	return new_coordinate;
 }
@@ -121,9 +121,9 @@ SimpleUp::SimpleUp(unsigned magnitude):SimpleInstruction(magnitude)
 {
 }
 
-const Coordinate SimpleUp::operator()(const Coordinate coordinate) const
+const SubmarineCoordinate SimpleUp::operator()(const SubmarineCoordinate coordinate) const
 {
-	Coordinate new_coordinate{coordinate};
+	SubmarineCoordinate new_coordinate{coordinate};
 	new_coordinate.depth -= magnitude;
 	return new_coordinate;
 }
@@ -132,9 +132,9 @@ AimingForward::AimingForward(unsigned magnitude):AimingInstruction(magnitude)
 {
 }
 
-const Coordinate AimingForward::operator()(const Coordinate coordinate) const
+const SubmarineCoordinate AimingForward::operator()(const SubmarineCoordinate coordinate) const
 {
-	Coordinate new_coordinate{coordinate};
+	SubmarineCoordinate new_coordinate{coordinate};
 	new_coordinate.horizontal_pos += magnitude;
 	new_coordinate.depth += coordinate.aim * magnitude;
 	return new_coordinate;
@@ -144,9 +144,9 @@ AimingDown::AimingDown(unsigned magnitude):AimingInstruction(magnitude)
 {
 }
 
-const Coordinate AimingDown::operator()(const Coordinate coordinate) const
+const SubmarineCoordinate AimingDown::operator()(const SubmarineCoordinate coordinate) const
 {
-	Coordinate new_coordinate{coordinate};
+	SubmarineCoordinate new_coordinate{coordinate};
 	new_coordinate.aim += magnitude;
 	return new_coordinate;
 }
@@ -155,9 +155,9 @@ AimingUp::AimingUp(unsigned magnitude):AimingInstruction(magnitude)
 {
 }
 
-const Coordinate AimingUp::operator()(const Coordinate coordinate) const
+const SubmarineCoordinate AimingUp::operator()(const SubmarineCoordinate coordinate) const
 {
-	Coordinate new_coordinate{coordinate};
+	SubmarineCoordinate new_coordinate{coordinate};
 	new_coordinate.aim -= magnitude;
 	return new_coordinate;
 }
@@ -170,12 +170,12 @@ AocDay2::~AocDay2()
 {
 }
 
-string AocDay2::part1(string filename, vector<string> extra_args)
+string AocDay2::part1(string &filename, vector<string> &extra_args)
 {
 	return run_submarine_program<SimpleInstruction>(filename, extra_args);
 }
 
-string AocDay2::part2(string filename, vector<string> extra_args)
+string AocDay2::part2(string &filename, vector<string> &extra_args)
 {
 	return run_submarine_program<AimingInstruction>(filename, extra_args);
 }

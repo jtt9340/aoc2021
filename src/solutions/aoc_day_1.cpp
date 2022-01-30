@@ -33,7 +33,7 @@ AocDay1::~AocDay1()
 {
 }
 
-vector<long> AocDay1::read_input(string filename)
+vector<long> AocDay1::read_input(string &filename)
 {
 	vector<long> depths;
 	ifstream input{filename};
@@ -67,13 +67,13 @@ vector<long> AocDay1::read_input(string filename)
 	return depths;
 }
 
-string AocDay1::part1(string filename, vector<string> extra_args)
+string AocDay1::part1(string &filename, vector<string> &extra_args)
 {
 	const auto depths = read_input(filename);
 	return to_string(count_increases(depths.cbegin(), depths.cend()));
 }
 
-string AocDay1::part2(string filename, vector<string> extra_args)
+string AocDay1::part2(string &filename, vector<string> &extra_args)
 {
 	const auto depths = read_input(filename);
 	return to_string(count_sliding_window_increases(depths.cbegin(), depths.cend()));

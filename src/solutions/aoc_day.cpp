@@ -14,13 +14,13 @@ AocDay::~AocDay()
 {
 }
 
-string AocDay::part1(string filename, vector<string> extra_args)
+string AocDay::part1(string &filename, vector<string> &extra_args)
 {
     cerr << "*****Part 1 implementation for day " << m_day << " is not defined*****" << endl;
     return "";
 }
 
-string AocDay::part2(string filename, vector<string> extra_args)
+string AocDay::part2(string &filename, vector<string> &extra_args)
 {
     cerr << "*****Part 2 implementation for day " << m_day << " is not defined*****" << endl;
     return "";

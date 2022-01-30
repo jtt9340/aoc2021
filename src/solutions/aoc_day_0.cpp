@@ -17,7 +17,7 @@ AocDay0::~AocDay0()
 {
 }
 
-vector<long> AocDay0::read_input(string filename)
+vector<long> AocDay0::read_input(string &filename)
 {
     FileUtils fileutils;
     vector<string> raw_lines;
@@ -37,7 +37,7 @@ vector<long> AocDay0::read_input(string filename)
     return data;
 }
 
-string AocDay0::part1(string filename, vector<string> extra_args)
+string AocDay0::part1(string &filename, vector<string> &extra_args)
 {
     vector<long> data = read_input(filename);
     long sum = 0;
@@ -50,7 +50,7 @@ string AocDay0::part1(string filename, vector<string> extra_args)
     return out.str();
 }
 
-string AocDay0::part2(string filename, vector<string> extra_args)
+string AocDay0::part2(string &filename, vector<string> &extra_args)
 {
     if (extra_args.size() > 0)
     {

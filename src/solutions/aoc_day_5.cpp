@@ -35,13 +35,55 @@ static void mark_diagram(Diagram &diagram, VentCoordinate::value_type x1,
 	assert(x1 == x2 || y1 == y2);
 	if (y1 == y2)
 	{
-		for (VentCoordinate::value_type x = min(x1, x2); x <= max(x1, x2); x++)
+		for (VentCoordinate::value_type x{min(x1, x2)}; x <= max(x1, x2); x++)
 			diagram[{x, y1}]++;
 	}
 	else
 	{
-		for (VentCoordinate::value_type y = min(y1, y2); y <= max(y1, y2); y++)
+		for (VentCoordinate::value_type y{min(y1, y2)}; y <= max(y1, y2); y++)
 			diagram[{x1, y}]++;
+	}
+}
+
+static void mark_diagram_diagonal(Diagram &diagram, VentCoordinate::value_type x1,
+		VentCoordinate::value_type y1, VentCoordinate::value_type x2, VentCoordinate::value_type y2)
+{
+	const auto dx{x2 - x1}, dy{y2 - y1};
+	if (y1 == y2)
+	{
+		for (VentCoordinate::value_type x{min(x1, x2)}; x <= max(x1, x2); x++)
+			diagram[{x, y1}]++;
+	}
+	else if (x1 == x2)
+	{
+		for (VentCoordinate::value_type y{min(y1, y2)}; y <= max(y1, y2); y++)
+			diagram[{x1, y}]++;
+	}
+	else if (abs(dx) == abs(dy))
+	{
+		// Slope is 1 / line is at 45 degree angle
+		if (x1 < x2)
+		{
+			for (VentCoordinate::value_type x{x1}, y{y1}; x <= x2; x++)
+			{
+				diagram[{x, y}]++;
+				if (y1 < y2)
+					y++;
+				else
+					y--;
+			}
+		}
+		else
+		{
+			for (VentCoordinate::value_type x{x1}, y{y1}; x >= x2; x--)
+			{
+				diagram[{x, y}]++;
+				if (y1 < y2)
+					y++;
+				else
+					y--;
+			}
+		}
 	}
 }
 
@@ -106,6 +148,38 @@ string AocDay5::part1(string &filename, vector<string> &extra_args)
 #endif
 		if (x1 == x2 || y1 == y2)
 			mark_diagram(overlaps, x1, y1, x2, y2);
+	}
+
+#ifdef DEBUG_OTHER
+	print_diagram(overlaps);
+#endif
+
+	for (auto &crossing : overlaps)
+		if (crossing.second >= 2)
+			count++;
+
+	return to_string(count);
+}
+
+string AocDay5::part2(string &filename, vector<string> &extra_args)
+{
+	ifstream input{filename};
+	string line_s;
+	Diagram overlaps;
+	Diagram::mapped_type count{0};
+
+	while (getline(input, line_s))
+	{
+		istringstream iss{line_s};
+		VentCoordinate::value_type x1, y1, x2, y2;
+		x1 = next_coordinate(iss);
+		y1 = next_coordinate(iss);
+		x2 = next_coordinate(iss);
+		y2 = next_coordinate(iss);
+#ifdef DEBUG_OTHER
+		cout << x1 << ',' << y1 << " -> " << x2 << ',' << y2 << endl;
+#endif
+		mark_diagram_diagonal(overlaps, x1, y1, x2, y2);
 	}
 
 #ifdef DEBUG_OTHER

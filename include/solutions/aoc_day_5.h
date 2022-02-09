@@ -23,6 +23,7 @@ public:
 	AocDay5();
 	~AocDay5();
 	string part1(string &filename, vector<string> &extra_args) override;
+	string part2(string &filename, vector<string> &extra_args) override;
 };
 
 #endif

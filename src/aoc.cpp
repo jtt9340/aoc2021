@@ -145,11 +145,15 @@ int main (int argc, char * argv[])
             }
             if (test.get_part() == 1)
             {
-                result = aoc_day->part1(test.get_filename(), test.get_extra_args());
+				filename = test.get_filename();
+				extra_args = test.get_extra_args();
+                result = aoc_day->part1(filename, extra_args);
             }
             else if (test.get_part() == 2)
             {
-                result = aoc_day->part2(test.get_filename(), test.get_extra_args());
+				filename = test.get_filename();
+				extra_args = test.get_extra_args();
+                result = aoc_day->part2(filename, extra_args);
             }
             else
             {

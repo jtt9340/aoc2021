@@ -34,3 +34,5 @@
 5,1,test_cases/day5_test2.txt,7269
 5,2,test_cases/day5_test1.txt,12
 5,2,test_cases/day5_test2.txt,21140
+6,1,test_cases/day6_test1.txt,5934
+6,1,test_cases/day6_test2.txt,379114

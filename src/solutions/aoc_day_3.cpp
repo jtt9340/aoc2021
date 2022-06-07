@@ -5,11 +5,9 @@
 
 #include "aoc_day_3.h"
 
-using namespace std;
-
-static unsigned long get_rating(const vector<unsigned long> &report, const string::size_type line_len, const bool oxygen, const string::size_type col = 0)
+static unsigned long get_rating(const std::vector<unsigned long> &report, const std::string::size_type line_len, const bool oxygen, const std::string::size_type col = 0)
 {
-	array<vector<remove_reference_t<decltype(report)>::value_type>, 2> criteria;
+	std::array<std::vector<std::remove_reference_t<decltype(report)>::value_type>, 2> criteria;
 	unsigned zero_count{0}, one_count{0};
 	for (auto value : report)
 	{
@@ -56,19 +54,19 @@ AocDay3::~AocDay3()
 {
 }
 
-string AocDay3::part1(string &filename, vector<string> &extra_args)
+std::string AocDay3::part1(std::string &filename, std::vector<std::string> &extra_args)
 {
-	vector<bool> report;
-	string::size_type line_len;
-	ifstream input{filename};
+	std::vector<bool> report;
+	std::string::size_type line_len;
+	std::ifstream input{filename};
 	if (!input)
 	{
-		cerr << filename << " not found" << endl;
+		std::cerr << filename << " not found" << std::endl;
 		return "";
 	}
 
-	string line;
-	getline(input, line);
+	std::string line;
+	std::getline(input, line);
 	line_len = line.size();
 
 	do
@@ -85,11 +83,11 @@ string AocDay3::part1(string &filename, vector<string> &extra_args)
 					report.push_back(true);
 					break;
 				default:
-					cerr << "Unrecognized char in report: " << bit << endl;
+					std::cerr << "Unrecognized char in report: " << bit << std::endl;
 					return "";
 			}
 		}
-	} while (getline(input, line));
+	} while (std::getline(input, line));
 
 	input.close();
 
@@ -103,43 +101,43 @@ string AocDay3::part1(string &filename, vector<string> &extra_args)
 			(bit ? one_count : zero_count)++;
 		}
 #ifdef DEBUG_OTHER
-		cout << "Encountered " << zero_count << " 0s and " << one_count << " 1s" << endl;
+		std::cout << "Encountered " << zero_count << " 0s and " << one_count << " 1s" << std::endl;
 #endif
 		(one_count > zero_count ? gamma : epsilon) |= (1 << (line_len - col - 1));
 		zero_count = one_count = 0;
 	}
 
 #ifdef DEBUG_OTHER
-	cout << "gamma: " << gamma << " epsilon: " << epsilon << endl;
+	std::cout << "gamma: " << gamma << " epsilon: " << epsilon << std::endl;
 #endif
-	return to_string(gamma * epsilon);
+	return std::to_string(gamma * epsilon);
 }
 
-string AocDay3::part2(string &filename, vector<string> &extra_args)
+std::string AocDay3::part2(std::string &filename, std::vector<std::string> &extra_args)
 {
-	vector<unsigned long> report;
-	string::size_type line_len;
-	ifstream input{filename};
+	std::vector<unsigned long> report;
+	std::string::size_type line_len;
+	std::ifstream input{filename};
 	if (!input)
 	{
-		cerr << filename << " not found" << endl;
+		std::cerr << filename << " not found" << std::endl;
 		return "";
 	}
 	
-	string line;
-	getline(input, line);
+	std::string line;
+	std::getline(input, line);
 	line_len = line.size();
 
 	do
 	{
 		assert(line_len == line.size());
 		report.push_back(stoul(line, nullptr, 2));
-	} while (getline(input, line));
+	} while (std::getline(input, line));
 
 	input.close();
 
 	const auto o2 = get_rating(report, line_len, true);
 	const auto co2 = get_rating(report, line_len, false);
 	const auto life_support = o2 * co2;
-	return to_string(life_support);
+	return std::to_string(life_support);
 }

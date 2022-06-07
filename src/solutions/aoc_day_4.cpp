@@ -5,15 +5,13 @@
 
 #include "aoc_day_4.h"
 
-using namespace std;
-
 // Needed because std::bitset<N>::operator & takes its second operand by reference
 // See https://stackoverflow.com/a/51167258
 constexpr BingoBoard::board_mask BingoBoard::bitset_mask;
 
 BingoBoard::BingoBoard()
 {
-	fill(board.begin(), board.end(), 0);
+	std::fill(std::begin(board), std::end(board), 0);
 }
 
 BingoBoard::reference BingoBoard::operator()(BingoBoard::size_type row, BingoBoard::size_type col)
@@ -94,10 +92,10 @@ BingoBoard::value_type BingoBoard::score(BingoBoard::value_type winning_number) 
 	return unmarked_sum * winning_number;
 }
 
-ostream &operator<<(ostream &out, BingoBoard &curr)
+std::ostream &operator<<(std::ostream &out, BingoBoard &curr)
 {
-	array<BingoBoard::value_type, BingoBoard::rows * BingoBoard::cols> digit_counts;
-	transform(curr.board.cbegin(), curr.board.cend(), digit_counts.begin(),
+	std::array<BingoBoard::value_type, BingoBoard::rows * BingoBoard::cols> digit_counts;
+	std::transform(std::cbegin(curr.board), std::cend(curr.board), std::begin(digit_counts),
 			[](BingoBoard::value_type value) -> BingoBoard::value_type {
 				BingoBoard::value_type count{0};
 				while (value != 0)
@@ -107,16 +105,16 @@ ostream &operator<<(ostream &out, BingoBoard &curr)
 				}
 				return count;
 			});
-	const auto largest_digit_count{*max_element(digit_counts.begin(), digit_counts.end())};
+	const auto largest_digit_count{*std::max_element(std::begin(digit_counts), std::end(digit_counts))};
 	const auto old_width{out.width()};
 	for (auto i = 0; i < BingoBoard::rows; i++)
 	{
 		for (auto j = 0; j < BingoBoard::cols; j++)
 		{
 			out << (curr.is_marked(i, j) ? '*' : ' ');
-			out << setw(largest_digit_count);
+			out << std::setw(largest_digit_count);
 			out << curr(i, j);
-			out << setw(old_width);
+			out << std::setw(old_width);
 			if (j < BingoBoard::cols - 1) out << ' ';
 		}
 		out << '\n';
@@ -124,7 +122,7 @@ ostream &operator<<(ostream &out, BingoBoard &curr)
 	return out;
 }
 
-istream &operator>>(istream &in, BingoBoard &curr)
+std::istream &operator>>(std::istream &in, BingoBoard &curr)
 {
 	for (auto i = 0; i < BingoBoard::rows; i++)
 	{
@@ -141,44 +139,44 @@ istream &operator>>(istream &in, BingoBoard &curr)
 
 void BingoGame::mark(BingoBoard::value_type val)
 {
-	for_each(begin(), end(), [val](BingoBoard &board){ board.mark(val); });
+	std::for_each(begin(), end(), [val](BingoBoard &board){ board.mark(val); });
 }
 
 BingoGame::iterator BingoGame::begin()
 {
-	return boards.begin();
+	return std::begin(boards);
 }
 
 BingoGame::const_iterator BingoGame::cbegin() const
 {
-	return boards.cbegin();
+	return std::cbegin(boards);
 }
 
 BingoGame::iterator BingoGame::end()
 {
-	return boards.end();
+	return std::end(boards);
 }
 
 BingoGame::const_iterator BingoGame::cend() const
 {
-	return boards.cend();
+	return std::cend(boards);
 }
 
 BingoGame::const_iterator BingoGame::winning_board() const
 {
-	return find_if(cbegin(), cend(), [](const BingoBoard &b){ return b.won(); });
+	return std::find_if(cbegin(), cend(), [](const BingoBoard &b){ return b.won(); });
 }
 
 // template <class InputIt>
 // BingoBoard::value_type BingoGame::play(InputIt first, InputIt last)
-BingoBoard::value_type BingoGame::play(const vector<BingoBoard::value_type> &numbers)
+BingoBoard::value_type BingoGame::play(const std::vector<BingoBoard::value_type> &numbers)
 {
 	// for (auto it = first; first != last; first++)
 	for (auto &num : numbers)
 	{
 #ifdef DEBUG_OTHER
 		// cout << "Called " << *it << '\n'
-		cout << "Called " << num << '\n'
+		std::cout << "Called " << num << '\n'
 		     << *this << "\n=====================\n\n";
 #endif
 		// mark(*it);
@@ -194,13 +192,13 @@ BingoBoard::value_type BingoGame::play(const vector<BingoBoard::value_type> &num
 	return -1; // Intentionally wraps around to large number
 }
 
-BingoBoard::value_type BingoGame::play_until_end(const vector<BingoBoard::value_type> &numbers)
+BingoBoard::value_type BingoGame::play_until_end(const std::vector<BingoBoard::value_type> &numbers)
 {
 	BingoBoard::value_type score = -1; // Intentionally wraps around to large number
 	for (auto &num : numbers)
 	{
 #ifdef DEBUG_OTHER
-		cout << "Called " << num << '\n'
+		std::cout << "Called " << num << '\n'
 		     << *this << "\n=====================\n\n";
 #endif
 		mark(num);
@@ -221,9 +219,9 @@ BingoBoard::value_type BingoGame::play_until_end(const vector<BingoBoard::value_
 	return score;
 }
 
-ostream &operator<<(ostream &out, BingoGame &curr)
+std::ostream &operator<<(std::ostream &out, BingoGame &curr)
 {
-	for (auto it = curr.boards.begin(); it != curr.boards.end(); it++)
+	for (auto it = std::begin(curr.boards); it != std::end(curr.boards); it++)
 	{
 		out << *it;
 		if (it != curr.boards.cend() - 1) out << "\n\n";
@@ -231,7 +229,7 @@ ostream &operator<<(ostream &out, BingoGame &curr)
 	return out;
 }
 
-istream &operator>>(istream &in, BingoGame &curr)
+std::istream &operator>>(std::istream &in, BingoGame &curr)
 {
 	for (BingoBoard board; in >> board;)
 		curr.boards.push_back(board);
@@ -247,28 +245,28 @@ AocDay4::~AocDay4()
 {
 }
 
-string AocDay4::part1(string &filename, vector<string> &extra_args)
+std::string AocDay4::part1(std::string &filename, std::vector<std::string> &extra_args)
 {
 #ifdef DEBUG_OTHER
-	cout << "Hello Day 4 Part 1" << endl;
+	std::cout << "Hello Day 4 Part 1" << std::endl;
 #endif
-	ifstream input{filename};
-	string numbers_s;
-	vector<BingoBoard::value_type> bingo_numbers;
+	std::ifstream input{filename};
+	std::string numbers_s;
+	std::vector<BingoBoard::value_type> bingo_numbers;
 
-	getline(input, numbers_s);
+	std::getline(input, numbers_s);
 #ifdef DEBUG_OTHER
-	cout << "Read in " << numbers_s << endl;
+	std::cout << "Read in " << numbers_s << std::endl;
 #endif
-	string::size_type pos = 0;
+	std::string::size_type pos = 0;
 	for (;;)
 	{
 		const auto comma_index = numbers_s.find(',', pos);
-		if (comma_index == string::npos)
+		if (comma_index == std::string::npos)
 			break;
-		bingo_numbers.push_back(stoi(numbers_s.substr(pos, comma_index)));
+		bingo_numbers.push_back(std::stoi(numbers_s.substr(pos, comma_index)));
 #ifdef DEBUG_OTHER
-		cout << "Bingo number " << bingo_numbers.back() << " (pos is " << pos << ')' << endl;
+		std::cout << "Bingo number " << bingo_numbers.back() << " (pos is " << pos << ')' << std::endl;
 #endif
 		pos = comma_index + 1;
 	}
@@ -276,33 +274,33 @@ string AocDay4::part1(string &filename, vector<string> &extra_args)
 	BingoGame game;
 	input >> game;
 	// return to_string(game.play(bingo_numbers.begin(), bingo_numbers.end()));
-	return to_string(game.play(bingo_numbers));
+	return std::to_string(game.play(bingo_numbers));
 }
 
-string AocDay4::part2(string &filename, vector<string> &extra_args)
+std::string AocDay4::part2(std::string &filename, std::vector<std::string> &extra_args)
 {
-	ifstream input{filename};
-	string numbers_s;
-	vector<BingoBoard::value_type> bingo_numbers;
+	std::ifstream input{filename};
+	std::string numbers_s;
+	std::vector<BingoBoard::value_type> bingo_numbers;
 
-	getline(input, numbers_s);
+	std::getline(input, numbers_s);
 #ifdef DEBUG_OTHER
-	cout << "Read in " << numbers_s << endl;
+	std::cout << "Read in " << numbers_s << std::endl;
 #endif
-	string::size_type pos = 0;
+	std::string::size_type pos = 0;
 	for (;;)
 	{
 		const auto comma_index = numbers_s.find(',', pos);
-		if (comma_index == string::npos)
+		if (comma_index == std::string::npos)
 			break;
-		bingo_numbers.push_back(stoi(numbers_s.substr(pos, comma_index)));
+		bingo_numbers.push_back(std::stoi(numbers_s.substr(pos, comma_index)));
 #ifdef DEBUG_OTHER
-		cout << "Bingo number " << bingo_numbers.back() << " (pos is " << pos << ')' << endl;
+		std::cout << "Bingo number " << bingo_numbers.back() << " (pos is " << pos << ')' << std::endl;
 #endif
 		pos = comma_index + 1;
 	}
 
 	BingoGame game;
 	input >> game;
-	return to_string(game.play_until_end(bingo_numbers));
+	return std::to_string(game.play_until_end(bingo_numbers));
 }

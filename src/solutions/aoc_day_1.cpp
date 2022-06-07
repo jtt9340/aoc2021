@@ -3,10 +3,8 @@
 
 #include "aoc_day_1.h"
 
-using namespace std;
-
-static unsigned count_increases(const vector<long>::const_iterator cur,
-		const vector<long>::const_iterator end, unsigned increases = 0)
+static unsigned count_increases(const std::vector<long>::const_iterator cur,
+		const std::vector<long>::const_iterator end, unsigned increases = 0)
 {
 	return cur == end || cur + 1 == end
 		? increases
@@ -14,8 +12,8 @@ static unsigned count_increases(const vector<long>::const_iterator cur,
 		;
 }
 
-static unsigned count_sliding_window_increases(const vector<long>::const_iterator cur,
-		const vector<long>::const_iterator end, unsigned increases = 0)
+static unsigned count_sliding_window_increases(const std::vector<long>::const_iterator cur,
+		const std::vector<long>::const_iterator end, unsigned increases = 0)
 {
 	if (end - cur < 4)
 		return increases;
@@ -33,48 +31,48 @@ AocDay1::~AocDay1()
 {
 }
 
-vector<long> AocDay1::read_input(string &filename)
+std::vector<long> AocDay1::read_input(std::string &filename)
 {
-	vector<long> depths;
-	ifstream input{filename};
+	std::vector<long> depths;
+	std::ifstream input{filename};
 	if (!input)
 	{
-		cerr << filename << " not found" << endl;
+		std::cerr << filename << " not found" << std::endl;
 		return depths;
 	}
 
-	string depth_s;
+	std::string depth_s;
 #ifdef DEBUG_OTHER
 	try
 	{
-		while (getline(input, depth_s))
+		while (std::getline(input, depth_s))
 			depths.push_back(stol(depth_s));
 	}
-	catch (const invalid_argument &e)
+	catch (const std::invalid_argument &e)
 	{
-		cerr << "Error reading in the data from " << filename << ": " << e.what() << endl;
-		cerr << "on input: " << depth_s << endl;
+		std::cerr << "Error reading in the data from " << filename << ": " << e.what() << std::endl;
+		std::cerr << "on input: " << depth_s << std::endl;
 	}
 #else
-	while (getline(input, depth_s))
+	while (std::getline(input, depth_s))
 		depths.push_back(stol(depth_s));
 #endif
 
 	if (input.bad())
-		cerr << "Error reading in the data from " << filename << endl;
+		std::cerr << "Error reading in the data from " << filename << std::endl;
 	
 	input.close();
 	return depths;
 }
 
-string AocDay1::part1(string &filename, vector<string> &extra_args)
+std::string AocDay1::part1(std::string &filename, std::vector<std::string> &extra_args)
 {
 	const auto depths = read_input(filename);
-	return to_string(count_increases(depths.cbegin(), depths.cend()));
+	return std::to_string(count_increases(std::cbegin(depths), std::cend(depths)));
 }
 
-string AocDay1::part2(string &filename, vector<string> &extra_args)
+std::string AocDay1::part2(std::string &filename, std::vector<std::string> &extra_args)
 {
 	const auto depths = read_input(filename);
-	return to_string(count_sliding_window_increases(depths.cbegin(), depths.cend()));
+	return std::to_string(count_sliding_window_increases(std::cbegin(depths), std::cend(depths)));
 }

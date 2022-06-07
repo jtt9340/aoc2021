@@ -6,21 +6,19 @@
 
 #include "file_utils.h"
 
-using namespace std;
-
 // Really basic way to parse a line based on delimiters. 
 // parameters:
 //  input = the input string to split. assume newline is removed, or else it will be addded to the last item
 //  delimiter = the value to split on
 //  quote = an optional parameter - a quote character to indicate a that quoted sections will be used and ignore delimiters
 //  comment_char = an optional parameter - if this is the first character in a line, that line is treated as a comment and skipped.
-vector<string> FileUtils::split_line_to_strings(string input, char delimiter, char quote_char, char comment_char)
+std::vector<std::string> FileUtils::split_line_to_strings(std::string input, char delimiter, char quote_char, char comment_char)
 {
 #ifdef DEBUG_RUNNER
-    cout << "original input is [" << input << "]" << endl;
+	std::cout << "original input is [" << input << "]" << std::endl;
 #endif
 
-    vector<string> splits;
+	std::vector<std::string> splits;
     
     char * pos = (char *)input.c_str();
     
@@ -33,7 +31,7 @@ vector<string> FileUtils::split_line_to_strings(string input, char delimiter, ch
     }
     
     bool in_quote = false;
-    ostringstream current;
+	std::ostringstream current;
     while (*pos != '\0')
     {
         if (quote_char && in_quote)
@@ -69,7 +67,7 @@ vector<string> FileUtils::split_line_to_strings(string input, char delimiter, ch
                 cout << "appending [" << current.str() << "] as a string" << endl;
 #endif
                 splits.push_back(current.str());
-                current = ostringstream();
+                current = std::ostringstream();
             }
             else
             {
@@ -86,16 +84,16 @@ vector<string> FileUtils::split_line_to_strings(string input, char delimiter, ch
     return splits;
 }
 
-bool FileUtils::read_as_list_of_strings(string filename, vector<string> & lines)
+bool FileUtils::read_as_list_of_strings(std::string filename, std::vector<std::string> & lines)
 {
-    ifstream infile(filename);
+	std::ifstream infile(filename);
     if (!infile)
     {
-        cerr << "*****Error opening file " << filename << endl;
+		std::cerr << "*****Error opening file " << filename << std::endl;
         return false;
     }
-    string line;
-    while (getline(infile, line))
+	std::string line;
+    while (std::getline(infile, line))
     {
 #ifdef DEBUG_RUNNER
         cout << "Read line [" << line << "] from file" << endl;
@@ -106,36 +104,36 @@ bool FileUtils::read_as_list_of_strings(string filename, vector<string> & lines)
     return true;
 }
 
-bool FileUtils::read_as_list_of_split_strings(string filename, vector<vector<string>> & split_strings, char delimiter, char quote_char, char comment_char)
+bool FileUtils::read_as_list_of_split_strings(std::string filename, std::vector<std::vector<std::string>> & split_strings, char delimiter, char quote_char, char comment_char)
 {
-    vector<string> lines;
+	std::vector<std::string> lines;
     if (!read_as_list_of_strings(filename, lines))
     {
         return false;
     }
-    for (vector<string>::iterator iter = lines.begin(); iter != lines.end(); ++iter)
+    for (std::vector<std::string>::iterator iter = lines.begin(); iter != lines.end(); ++iter)
     {
-        vector<string> results = split_line_to_strings(*iter, delimiter, quote_char, comment_char);
+		std::vector<std::string> results = split_line_to_strings(*iter, delimiter, quote_char, comment_char);
         if (results.size() > 0)
             split_strings.push_back(results);
     }
     return true;
 }
 
-bool FileUtils::read_as_list_of_split_longs(string filename, vector<vector<long>> & split_longs, char delimiter, char quote_char, char comment_char)
+bool FileUtils::read_as_list_of_split_longs(std::string filename, std::vector<std::vector<long>> & split_longs, char delimiter, char quote_char, char comment_char)
 {
-    vector<string> lines;
+	std::vector<std::string> lines;
     if (!read_as_list_of_strings(filename, lines))
     {
         return false;
     }
-    for (vector<string>::iterator iter = lines.begin(); iter != lines.end(); ++iter)
+    for (std::vector<std::string>::iterator iter = lines.begin(); iter != lines.end(); ++iter)
     {
-        vector<string> long_strings = split_line_to_strings(*iter, delimiter, quote_char, comment_char);
-        vector<long> longs;
-        for (vector<string>::iterator str_long_iter = long_strings.begin(); str_long_iter != long_strings.end(); ++str_long_iter)
+		std::vector<std::string> long_strings = split_line_to_strings(*iter, delimiter, quote_char, comment_char);
+        std::vector<long> longs;
+        for (std::vector<std::string>::iterator str_long_iter = long_strings.begin(); str_long_iter != long_strings.end(); ++str_long_iter)
         {
-            string str_long = *str_long_iter;
+			std::string str_long = *str_long_iter;
             longs.push_back(strtol(str_long.c_str(), NULL, 10));
         }
         split_longs.push_back(longs);

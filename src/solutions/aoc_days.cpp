@@ -11,8 +11,6 @@
 #include "aoc_day_5.h"
 #include "aoc_day_6.h"
 
-using namespace std;
-
 AocDays::AocDays()
 {
     // adding each member to the map goes here
@@ -28,7 +26,7 @@ AocDays::AocDays()
 AocDays::~AocDays()
 {
     // delete all of the days solutions
-    for (map<int, AocDay *>::iterator days_iter = m_days.begin(); days_iter != m_days.end(); ++days_iter)
+    for (std::map<int, AocDay *>::iterator days_iter = m_days.begin(); days_iter != m_days.end(); ++days_iter)
     {
         delete days_iter->second;
     }

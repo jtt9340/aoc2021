@@ -17,12 +17,12 @@
 #define OPTS_RUN_TEST (DASH_D | DASH_P | DASH_T)
 #define OPTS_RUN_REGRESSION (DASH_R)
 
-void usage(string prog_name)
+void usage(std::string prog_name)
 {
-    cerr << "Usage for " << prog_name << endl;
-    cerr << "   Run one file: " << prog_name << " -d day -p part -f filename [extra_args...]" << endl;
-    cerr << "   Run one day/part tests: " << prog_name << " -d day -p part -t test_index_filename" << endl;
-    cerr << "   Run full regression test: " << prog_name << " -r test_index_filename" << endl;
+	std::cerr << "Usage for " << prog_name << std::endl;
+    std::cerr << "   Run one file: " << prog_name << " -d day -p part -f filename [extra_args...]" << std::endl;
+    std::cerr << "   Run one day/part tests: " << prog_name << " -d day -p part -t test_index_filename" << std::endl;
+    std::cerr << "   Run full regression test: " << prog_name << " -r test_index_filename" << std::endl;
 }
 
 int main (int argc, char * argv[])
@@ -34,11 +34,11 @@ int main (int argc, char * argv[])
     long day = 0;
     long part = 0;
     bool regression = false;
-    string filename = "";
-    string test_filename = "";
-    string result = "";
-    vector<string> extra_args;
-    ostringstream test_summary;
+	std::string filename = "";
+    std::string test_filename = "";
+    std::string result = "";
+    std::vector<std::string> extra_args;
+    std::ostringstream test_summary;
     
     int given_opts = 0;
     int opt;
@@ -49,30 +49,30 @@ int main (int argc, char * argv[])
         switch (opt)
         {
             case 'd':
-                day = strtol(optarg, NULL, 10);
+                day = std::strtol(optarg, nullptr, 10);
                 given_opts |= DASH_D;
                 break;
             case 'p':
-                part = strtol(optarg, NULL, 10);
+                part = std::strtol(optarg, nullptr, 10);
                 given_opts |= DASH_P;
                 break;
             case 'f':
-                filename = string(optarg);
+                filename = std::string(optarg);
                 given_opts |= DASH_F;
                 break;
             case 't':
-                test_filename = string(optarg);
+                test_filename = std::string(optarg);
                 given_opts |= DASH_T;
                 break;
             case 'r':
-                test_filename = string(optarg);
+                test_filename = std::string(optarg);
                 regression = true;
                 given_opts |= DASH_R;
                 break;
             default:
-                cerr << "Invalid option " << opt << " given" << endl;
+				std::cerr << "Invalid option " << opt << " given" << std::endl;
                 usage(argv[0]);
-                exit(8);
+				std::exit(8);
                 break;
         }
     }
@@ -82,14 +82,14 @@ int main (int argc, char * argv[])
     {
         for (int i=optind; i<argc; i++)
         {
-            extra_args.push_back(string(argv[i]));
+            extra_args.push_back(std::string(argv[i]));
         }
     }
     else if (given_opts != OPTS_RUN_TEST && given_opts != OPTS_RUN_REGRESSION)
     {
-        cerr << "Invalid set of options given" << endl;
+		std::cerr << "Invalid set of options given" << std::endl;
         usage(argv[0]);
-        exit(8);
+		std::exit(8);
     }
     
     // Actually do stuff
@@ -98,7 +98,7 @@ int main (int argc, char * argv[])
         AocDay * aoc_day = days.get_day(day);
         if (!aoc_day)
         {
-            cerr << "Program for day " << day << " not found!!!" << endl;
+			std::cerr << "Program for day " << day << " not found!!!" << std::endl;
             exit(8);
         }
         if (part == 1)
@@ -111,37 +111,37 @@ int main (int argc, char * argv[])
         }
         else
         {
-            cerr << "Invalid part" << part << " specified!!!" << endl;
+			std::cerr << "Invalid part" << part << " specified!!!" << std::endl;
             exit(8);
         }
-        cout << "***Day " << day << " Part " << part << " for file " << filename << " has result " << result << endl;
+		std::cout << "***Day " << day << " Part " << part << " for file " << filename << " has result " << result << std::endl;
     }
     else // no filename; assume some type of testing mode
     {
-        vector<AocTest> tests_to_run;
+		std::vector<AocTest> tests_to_run;
         if (!tests.load_tests(test_filename))
         {
-            cerr << "Error loading from test indext file " << test_filename << endl;
-            exit(8);
+			std::cerr << "Error loading from test indext file " << test_filename << std::endl;
+			std::exit(8);
         }
         if (regression)
         {
-            cout << "Running full regression test for all days and parts!" << endl;
+			std::cout << "Running full regression test for all days and parts!" << std::endl;
             tests_to_run = tests.get_all_tests();
         }
         else
         {
-            cout << "Running tests for day " << day << " part " << part << endl;
+			std::cout << "Running tests for day " << day << " part " << part << std::endl;
             tests_to_run = tests.filter_tests(day, part);
         }
-        for (vector<AocTest>::iterator test_iter = tests_to_run.begin(); test_iter != tests_to_run.end(); ++test_iter)
+        for (std::vector<AocTest>::iterator test_iter = tests_to_run.begin(); test_iter != tests_to_run.end(); ++test_iter)
         {
             AocTest test = *test_iter;
             AocDay * aoc_day = days.get_day(test.get_day());
             if (!aoc_day)
             {
-                cerr << "Program for day " << test.get_day() << " not found!!!" << endl;
-                exit(8);
+				std::cerr << "Program for day " << test.get_day() << " not found!!!" << std::endl;
+                std::exit(8);
             }
             if (test.get_part() == 1)
             {
@@ -157,19 +157,19 @@ int main (int argc, char * argv[])
             }
             else
             {
-                cerr << "Invalid part" << test.get_part() << " specified!!!" << endl;
-                exit(8);
+				std::cerr << "Invalid part" << test.get_part() << " specified!!!" << std::endl;
+                std::exit(8);
             }
             if (result == test.get_expected_result())
             {
-                test_summary << "++Day " << test.get_day() << " Part " << test.get_part() << "-" << test.get_filename() << " passed with result " << result << endl;
+                test_summary << "++Day " << test.get_day() << " Part " << test.get_part() << "-" << test.get_filename() << " passed with result " << result << std::endl;
             }
             else
             {
-                test_summary << "--Day " << test.get_day() << " Part " << test.get_part() << "-" << test.get_filename() << " FAILED expected=" << test.get_expected_result() << " actual=" << result << endl;
+                test_summary << "--Day " << test.get_day() << " Part " << test.get_part() << "-" << test.get_filename() << " FAILED expected=" << test.get_expected_result() << " actual=" << result << std::endl;
             }
         }
-        cout << test_summary.str();
+		std::cout << test_summary.str();
     }
     return 0;
 }

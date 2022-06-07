@@ -8,8 +8,8 @@ class AocDay3 : public AocDay
 	public:
 		AocDay3();
 		~AocDay3();
-		string part1(string &filename, vector<string> &extra_args) override;
-		string part2(string &filename, vector<string> &extra_args) override;
+		std::string part1(std::string &filename, std::vector<std::string> &extra_args) override;
+		std::string part2(std::string &filename, std::vector<std::string> &extra_args) override;
 };
 
 #endif

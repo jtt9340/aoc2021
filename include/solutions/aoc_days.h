@@ -5,12 +5,10 @@
 
 #include "aoc_day.h"
 
-using namespace std;
-
 class AocDays
 {
     protected:
-        map<int, AocDay *> m_days;
+		std::map<int, AocDay *> m_days;
     public:
         AocDays();
         ~AocDays();

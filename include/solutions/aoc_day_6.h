@@ -6,7 +6,7 @@
 #define __AOC_DAY_6__
 
 class lanternfish {
-	using record = array<size_t, 9>;
+	using record = std::array<size_t, 9>;
 	record timers;
 
 	void next_day();
@@ -21,9 +21,9 @@ public:
 			{
 				timers.at(*it)++;
 			}
-			catch (out_of_range &e)
+			catch (const std::out_of_range &e)
 			{
-				throw invalid_argument{"A fish's count cannot be outside the range [0, 8]"};
+				throw std::invalid_argument{"A fish's count cannot be outside the range [0, 8]"};
 			}
 		}
 	}
@@ -32,12 +32,12 @@ public:
 };
 
 class AocDay6 : public AocDay {
-	vector<long> read_input(string &filename);
+	std::vector<long> read_input(std::string &filename);
 public:
 	AocDay6();
 	~AocDay6();
-	string part1(string &filename, vector<string> &extra_args) override;
-	string part2(string &filename, vector<string> &extra_args) override;
+	std::string part1(std::string &filename, std::vector<std::string> &extra_args) override;
+	std::string part2(std::string &filename, std::vector<std::string> &extra_args) override;
 };
 
 #endif

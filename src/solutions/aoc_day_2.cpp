@@ -3,26 +3,24 @@
 
 #include "aoc_day_2.h"
 
-using namespace std;
-
 template <class T>
-static string run_submarine_program(string &filename, vector<string> &extra_args)
+static std::string run_submarine_program(std::string &filename, std::vector<std::string> &extra_args)
 {
 	SubmarineCoordinate pos;
-	ifstream input{filename};
+	std::ifstream input{filename};
 	if (!input)
 	{
-		cerr << filename << " not found" << endl;
+		std::cerr << filename << " not found" << std::endl;
 		return "";
 	}
 
-	string instruction_s;
-	while (getline(input, instruction_s))
+	std::string instruction_s;
+	while (std::getline(input, instruction_s))
 	{
 		const auto instruction = T::parse(instruction_s);
 		if (!instruction)
 		{
-			cerr << "Unrecognized instruction " << instruction_s << endl;
+			std::cerr << "Unrecognized instruction " << instruction_s << std::endl;
 			return "";
 		}
 
@@ -30,10 +28,10 @@ static string run_submarine_program(string &filename, vector<string> &extra_args
 	}
 
 	if (input.bad())
-		cerr << "Error reading in the data from " << filename << endl;
+		std::cerr << "Error reading in the data from " << filename << std::endl;
 
 	input.close();
-	return to_string(pos.horizontal_pos * pos.depth);
+	return std::to_string(pos.horizontal_pos * pos.depth);
 }
 
 Instruction::Instruction(unsigned magnitude):magnitude(magnitude)
@@ -49,7 +47,7 @@ SimpleInstruction::SimpleInstruction(unsigned magnitude):Instruction(magnitude)
 {
 }
 
-unique_ptr<SimpleInstruction> SimpleInstruction::parse(const string &line)
+std::unique_ptr<SimpleInstruction> SimpleInstruction::parse(const std::string &line)
 {
 	const auto space_index = line.find(' ');
 	const auto cmd = line.substr(0, space_index);
@@ -57,14 +55,14 @@ unique_ptr<SimpleInstruction> SimpleInstruction::parse(const string &line)
 	const auto mag = stoul(mag_s);
 
 	if (cmd == "forward")
-		return make_unique<SimpleForward>(mag);
+		return std::make_unique<SimpleForward>(mag);
 	else if (cmd == "down")
-		return make_unique<SimpleDown>(mag);
+		return std::make_unique<SimpleDown>(mag);
 	else if (cmd == "up")
-		return make_unique<SimpleUp>(mag);
+		return std::make_unique<SimpleUp>(mag);
 	else
 	{
-		cerr << "Unrecognized instruction \"" << line << '"' << endl;
+		std::cerr << "Unrecognized instruction \"" << line << '"' << std::endl;
 		return nullptr;
 	}
 }
@@ -73,7 +71,7 @@ AimingInstruction::AimingInstruction(unsigned magnitude):Instruction(magnitude)
 {
 }
 
-unique_ptr<AimingInstruction> AimingInstruction::parse(const string &line)
+std::unique_ptr<AimingInstruction> AimingInstruction::parse(const std::string &line)
 {
 	// Is there a way to make this more DRY so I am not literally copying the
 	// code from SimpleInstruction::parse? Using templates perhaps?
@@ -83,14 +81,14 @@ unique_ptr<AimingInstruction> AimingInstruction::parse(const string &line)
 	const auto mag = stoul(mag_s);
 
 	if (cmd == "forward")
-		return make_unique<AimingForward>(mag);
+		return std::make_unique<AimingForward>(mag);
 	else if (cmd == "down")
-		return make_unique<AimingDown>(mag);
+		return std::make_unique<AimingDown>(mag);
 	else if (cmd == "up")
-		return make_unique<AimingUp>(mag);
+		return std::make_unique<AimingUp>(mag);
 	else
 	{
-		cerr << "Unrecognized instruction \"" << line << '"' << endl;
+		std::cerr << "Unrecognized instruction \"" << line << '"' << std::endl;
 		return nullptr;
 	}
 }
@@ -170,12 +168,12 @@ AocDay2::~AocDay2()
 {
 }
 
-string AocDay2::part1(string &filename, vector<string> &extra_args)
+std::string AocDay2::part1(std::string &filename, std::vector<std::string> &extra_args)
 {
 	return run_submarine_program<SimpleInstruction>(filename, extra_args);
 }
 
-string AocDay2::part2(string &filename, vector<string> &extra_args)
+std::string AocDay2::part2(std::string &filename, std::vector<std::string> &extra_args)
 {
 	return run_submarine_program<AimingInstruction>(filename, extra_args);
 }

@@ -23,7 +23,7 @@ struct SimpleInstruction : Instruction
 {
 	explicit SimpleInstruction(unsigned magnitude);
 
-	static unique_ptr<SimpleInstruction> parse(const string &line);
+	static std::unique_ptr<SimpleInstruction> parse(const std::string &line);
 };
 
 struct SimpleForward : public SimpleInstruction
@@ -51,7 +51,7 @@ struct AimingInstruction : Instruction
 {
 	explicit AimingInstruction(unsigned magnitude);
 
-	static unique_ptr<AimingInstruction> parse(const string &line);
+	static std::unique_ptr<AimingInstruction> parse(const std::string &line);
 };
 
 struct AimingForward : public AimingInstruction
@@ -80,8 +80,8 @@ class AocDay2 : public AocDay
 	public:
 		AocDay2();
 		~AocDay2();
-		string part1(string &filename, vector<string> &extra_args) override;
-		string part2(string &filename, vector<string> &extra_args) override;
+		std::string part1(std::string &filename, std::vector<std::string> &extra_args) override;
+		std::string part2(std::string &filename, std::vector<std::string> &extra_args) override;
 };
 
 #endif

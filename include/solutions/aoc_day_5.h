@@ -12,7 +12,7 @@ constexpr VentCoordinate::size_type y{1};
 
 struct VentCoordinateComparator
 {
-	bool operator()(const VentCoordinate &lhs, const VentCoordinate &rhs) const;
+    bool operator()(const VentCoordinate &lhs, const VentCoordinate &rhs) const;
 };
 
 using Diagram = std::map<VentCoordinate, unsigned int, VentCoordinateComparator>;
@@ -20,10 +20,10 @@ using Diagram = std::map<VentCoordinate, unsigned int, VentCoordinateComparator>
 class AocDay5 : public AocDay
 {
 public:
-	AocDay5();
-	~AocDay5();
-	std::string part1(std::string &filename, std::vector<std::string> &extra_args) override;
-	std::string part2(std::string &filename, std::vector<std::string> &extra_args) override;
+    AocDay5();
+    ~AocDay5();
+    std::string part1(std::string &filename, std::vector<std::string> &extra_args) override;
+    std::string part2(std::string &filename, std::vector<std::string> &extra_args) override;
 };
 
 #endif

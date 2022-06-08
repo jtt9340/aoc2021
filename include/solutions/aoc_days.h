@@ -7,12 +7,13 @@
 
 class AocDays
 {
-    protected:
-		std::map<int, AocDay *> m_days;
-    public:
-        AocDays();
-        ~AocDays();
-        AocDay * get_day(int day);
+protected:
+    std::map<int, AocDay *> m_days;
+
+public:
+    AocDays();
+    ~AocDays();
+    AocDay *get_day(int day);
 };
 
 #endif

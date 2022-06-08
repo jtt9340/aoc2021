@@ -13,13 +13,14 @@
 
 class AocDay
 {
-    protected:
-        int m_day;
-    public:
-        AocDay(int day);
-        ~AocDay();
-        virtual std::string part1(std::string &filename, std::vector<std::string> &extra_args);
-        virtual std::string part2(std::string &filename, std::vector<std::string> &extra_args);
+protected:
+    int m_day;
+
+public:
+    AocDay(int day);
+    ~AocDay();
+    virtual std::string part1(std::string &filename, std::vector<std::string> &extra_args);
+    virtual std::string part2(std::string &filename, std::vector<std::string> &extra_args);
 };
 
 #endif

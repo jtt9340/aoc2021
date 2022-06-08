@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 
-#include "aoc_tests.h"
 #include "aoc_test.h"
+#include "aoc_tests.h"
 #include "constants.h"
 #include "file_utils.h"
 
@@ -17,10 +17,10 @@ AocTests::~AocTests()
 std::string AocTests::base_directory(std::string filename)
 {
     size_t found;
-    found=filename.find_last_of("/\\");
+    found = filename.find_last_of("/\\");
     if (found != std::string::npos) // found a directory character. return everything from the start through that character
     {
-        return filename.substr(0,found+1);
+        return filename.substr(0, found + 1);
     }
     else // no directory character found. just return an empty string to indicate the current directory
     {
@@ -30,32 +30,33 @@ std::string AocTests::base_directory(std::string filename)
 
 bool AocTests::load_tests(std::string filename)
 {
-	std::vector<std::vector<std::string>> test_index_contents;
-	std::string basedir = base_directory(filename);
+    std::vector<std::vector<std::string>> test_index_contents;
+    std::string basedir = base_directory(filename);
 #ifdef DEBUG_RUNNER
     cout << "The base dicectory for test files is " << basedir << endl;
 #endif
     FileUtils fileutils;
     if (!fileutils.read_as_list_of_split_strings(filename, test_index_contents, TEST_INDEX_DELIM, TEST_INDEX_QUOTE, TEST_INDEX_COMMENT))
     {
-		std::cerr << "Error reading test index file " << filename << std::endl;
+        std::cerr << "Error reading test index file " << filename << std::endl;
         return false;
     }
-    
-    for (std::vector<std::vector<std::string>>::iterator test_iter = test_index_contents.begin(); test_iter != test_index_contents.end(); ++test_iter)
+
+    for (std::vector<std::vector<std::string>>::iterator test_iter = test_index_contents.begin(); test_iter != test_index_contents.end();
+         ++test_iter)
     {
-		std::vector<std::string> test_parameters = *test_iter;
+        std::vector<std::string> test_parameters = *test_iter;
         // Skip a blank line
         if (test_parameters.size() == 1 && test_parameters[0].size() == 0)
         {
             continue;
         }
-        
-		std::vector<std::string>::iterator parm_iter=test_parameters.begin();
+
+        std::vector<std::string>::iterator parm_iter = test_parameters.begin();
         // format is day,part,filename,expected[,...extra args]
         long day, part;
-		std::string filename, full_filename, expected;
-		std::vector<std::string> extra_args;
+        std::string filename, full_filename, expected;
+        std::vector<std::string> extra_args;
 
         day = strtol((*parm_iter).c_str(), nullptr, 10);
         ++parm_iter;
@@ -92,15 +93,15 @@ std::vector<AocTest> AocTests::get_all_tests()
 
 std::vector<AocTest> AocTests::filter_tests(int day, int part)
 {
-	std::vector<AocTest> matching_tests;
-    
-    for (std::vector<AocTest>::iterator test_iter = m_tests.begin(); test_iter !=m_tests.end(); ++test_iter)
+    std::vector<AocTest> matching_tests;
+
+    for (std::vector<AocTest>::iterator test_iter = m_tests.begin(); test_iter != m_tests.end(); ++test_iter)
     {
         if ((*test_iter).matches(day, part))
         {
             matching_tests.push_back(*test_iter);
         }
     }
-    
+
     return matching_tests;
 }

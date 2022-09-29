@@ -12,7 +12,7 @@ CPPFLAGS=-g -std=c++14 ${DEBUG} -Iinclude/common -Iinclude/runner -Iinclude/solu
 SRCSROOT = src/solutions
 TARGETDIR = ${subst src,build,${SRCSROOT}}
 SOLUTION_SRCS = ${wildcard ${SRCSROOT}/*.cpp}
-SOLUTION_OBJS = ${SOLUTION_SRCS:${SRCSROOT}/*.cpp=}
+SOLUTION_OBJS = ${SOLUTION_SRCS:.cpp=.o}
 
 .DEFAULT_GOAL := all
 

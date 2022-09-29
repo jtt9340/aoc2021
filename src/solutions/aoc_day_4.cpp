@@ -1,4 +1,6 @@
 #include <algorithm>
+#include <cassert>
+#include <iomanip>
 #include <iostream>
 #include <numeric>
 #include <sstream>
@@ -98,7 +100,8 @@ std::ostream &operator<<(std::ostream &out, BingoBoard &curr)
     std::transform(std::cbegin(curr.board),
                    std::cend(curr.board),
                    std::begin(digit_counts),
-                   [](BingoBoard::value_type value) -> BingoBoard::value_type {
+                   [](BingoBoard::value_type value) -> BingoBoard::value_type
+                   {
                        BingoBoard::value_type count{0};
                        while (value != 0)
                        {

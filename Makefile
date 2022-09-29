@@ -86,3 +86,4 @@ all: build/runner/aoc_test.o  \
 .PHONY: fmt
 fmt:
 	clang-format -i -style=file ${SOLUTION_SRCS} src/aoc.cpp src/runner/*.cpp include/*/*.h
+	command -v nixfmt && nixfmt -w 80 shell.nix

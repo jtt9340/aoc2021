@@ -32,7 +32,7 @@ long compute_fuel(const std::vector<long> &positions, const long align)
     for (const auto &pos : positions)
     {
         const auto diff = std::abs(pos - align);
-        distances.push_back(diff & 1 ? (diff + 1) * (diff / 2) + (diff / 2) + 1 : (diff + 1) * (diff / 2));
+        distances.push_back((diff * (diff + 1)) / 2);
     }
     return std::accumulate(std::cbegin(distances) + 1, std::cend(distances), distances[0]);
 }

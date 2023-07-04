@@ -81,15 +81,15 @@ std::string AocDay3::part1(std::string &filename, std::vector<std::string> &extr
         {
             switch (bit)
             {
-                case '0':
-                    report.push_back(false);
-                    break;
-                case '1':
-                    report.push_back(true);
-                    break;
-                default:
-                    std::cerr << "Unrecognized char in report: " << bit << std::endl;
-                    return "";
+            case '0':
+                report.push_back(false);
+                break;
+            case '1':
+                report.push_back(true);
+                break;
+            default:
+                std::cerr << "Unrecognized char in report: " << bit << std::endl;
+                return "";
             }
         }
     } while (std::getline(input, line));

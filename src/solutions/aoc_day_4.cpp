@@ -100,8 +100,7 @@ std::ostream &operator<<(std::ostream &out, BingoBoard &curr)
     std::transform(std::cbegin(curr.board),
                    std::cend(curr.board),
                    std::begin(digit_counts),
-                   [](BingoBoard::value_type value) -> BingoBoard::value_type
-                   {
+                   [](BingoBoard::value_type value) -> BingoBoard::value_type {
                        BingoBoard::value_type count{0};
                        while (value != 0)
                        {

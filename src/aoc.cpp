@@ -48,32 +48,32 @@ int main(int argc, char *argv[])
     {
         switch (opt)
         {
-            case 'd':
-                day = std::strtol(optarg, nullptr, 10);
-                given_opts |= DASH_D;
-                break;
-            case 'p':
-                part = std::strtol(optarg, nullptr, 10);
-                given_opts |= DASH_P;
-                break;
-            case 'f':
-                filename = std::string(optarg);
-                given_opts |= DASH_F;
-                break;
-            case 't':
-                test_filename = std::string(optarg);
-                given_opts |= DASH_T;
-                break;
-            case 'r':
-                test_filename = std::string(optarg);
-                regression = true;
-                given_opts |= DASH_R;
-                break;
-            default:
-                std::cerr << "Invalid option " << opt << " given" << std::endl;
-                usage(argv[0]);
-                std::exit(8);
-                break;
+        case 'd':
+            day = std::strtol(optarg, nullptr, 10);
+            given_opts |= DASH_D;
+            break;
+        case 'p':
+            part = std::strtol(optarg, nullptr, 10);
+            given_opts |= DASH_P;
+            break;
+        case 'f':
+            filename = std::string(optarg);
+            given_opts |= DASH_F;
+            break;
+        case 't':
+            test_filename = std::string(optarg);
+            given_opts |= DASH_T;
+            break;
+        case 'r':
+            test_filename = std::string(optarg);
+            regression = true;
+            given_opts |= DASH_R;
+            break;
+        default:
+            std::cerr << "Invalid option " << opt << " given" << std::endl;
+            usage(argv[0]);
+            std::exit(8);
+            break;
         }
     }
 

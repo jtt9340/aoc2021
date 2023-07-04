@@ -42,3 +42,5 @@
 7,1,test_cases/day7_test2.txt,341534
 7,2,test_cases/day7_test1.txt,168
 7,2,test_cases/day7_test2.txt,93397632
+8,1,test_cases/day8_test1.txt,26
+8,1,test_cases/day8_test2.txt,301

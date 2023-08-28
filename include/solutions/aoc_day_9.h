@@ -21,6 +21,9 @@ public:
     reference operator()(size_type row, size_type col);
     const_reference operator()(size_type row, size_type col) const;
 
+    reference operator()(std::array<size_type, 2> coord);
+    const_reference operator()(std::array<size_type, 2> coord) const;
+
     bool is_low_point(size_type row, size_type col) const;
 #ifdef DEBUG_OTHER
     friend std::ostream &operator<<(std::ostream &out, Matrix &curr);
@@ -39,6 +42,7 @@ public:
     AocDay9();
     ~AocDay9() = default;
     std::string part1(std::string &filename, std::vector<std::string> &extra_args) override;
+    std::string part2(std::string &filename, std::vector<std::string> &extra_args) override;
 };
 
 #endif

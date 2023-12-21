@@ -9,6 +9,7 @@ public:
     AocDay10();
     ~AocDay10() = default;
     std::string part1(std::string &filename, std::vector<std::string> &extra_args) override;
+    std::string part2(std::string &filename, std::vector<std::string> &extra_args) override;
 };
 
 #endif

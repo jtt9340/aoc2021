@@ -48,3 +48,5 @@
 9,1,test_cases/day9_test2.txt,462
 9,2,test_cases/day9_test1.txt,1134
 9,2,test_cases/day9_test2.txt,1397760
+10,1,test_cases/day10_test1.txt,26397
+10,1,test_cases/day10_test2.txt,290691

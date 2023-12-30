@@ -11,8 +11,8 @@ CPPFLAGS=-g -std=c++14 ${DEBUG} -Iinclude/common -Iinclude/runner -Iinclude/solu
 
 SRCSROOT = src/solutions
 TARGETDIR = ${subst src,build,${SRCSROOT}}
-SOLUTION_SRCS = ${wildcard ${SRCSROOT}/*.cpp}
-SOLUTION_OBJS = ${SOLUTION_SRCS:.cpp=.o}
+SOLUTION_SRCS = ${wildcard ${SRCSROOT}/*.cpp} src/common/util.cpp
+SOLUTION_OBJS = ${patsubst src/%.cpp,build/%.o,${SOLUTION_SRCS}}
 
 .DEFAULT_GOAL := all
 
@@ -37,6 +37,10 @@ bin/lib/librunner.a: build/runner/aoc_test.o  \
 	build/runner/aoc_tests.o  \
 	build/runner/file_utils.o
 	${AR} rcs bin/lib/librunner.a build/runner/aoc_test.o build/runner/aoc_tests.o build/runner/file_utils.o
+
+# Utility functions
+build/common/util.o: src/common/util.cpp
+	${CXX} ${CPPFLAGS} -o $@ -c $?
 
 # Solutions - These are the programs for the daily solutions
 build/solutions/%.o: src/solutions/%.cpp \
@@ -67,6 +71,7 @@ clean:
 	rm -f build/runner/aoc_test.o  \
 	build/runner/aoc_tests.o  \
 	build/runner/file_utils.o  \
+	build/common/util.o \
 	${SOLUTION_OBJS} \
 	build/aoc.o  \
 	bin/lib/librunner.a  \
@@ -77,6 +82,7 @@ clean:
 all: build/runner/aoc_test.o  \
 	build/runner/aoc_tests.o  \
 	build/runner/file_utils.o  \
+	build/common/util.o \
 	${SOLUTION_OBJS} \
 	build/aoc.o  \
 	bin/lib/librunner.a  \
@@ -85,7 +91,7 @@ all: build/runner/aoc_test.o  \
 
 .PHONY: fmt
 fmt:
-	clang-format -i -style=file ${SOLUTION_SRCS} src/aoc.cpp src/runner/*.cpp include/*/*.h
+	clang-format -i -style=file ${SOLUTION_SRCS} src/aoc.cpp src/*/*.cpp include/*/*.h
 	if command -v nixfmt >/dev/null 2>&1; then  \
 		nixfmt -w 80 shell.nix;  \
 	fi

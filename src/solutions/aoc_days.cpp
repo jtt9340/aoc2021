@@ -3,6 +3,10 @@
 #include "aoc_day.h"
 #include "aoc_days.h"
 // includes for each day will go here
+// Disable clang-format because otherwise it will reorder the imports
+// lexicographically (i.e. day 1 -> day 10 -> day 2) and I want them in
+// number order
+// clang-format off
 #include "aoc_day_0.h"
 #include "aoc_day_1.h"
 #include "aoc_day_2.h"
@@ -14,6 +18,8 @@
 #include "aoc_day_8.h"
 #include "aoc_day_9.h"
 #include "aoc_day_10.h"
+#include "aoc_day_11.h"
+// clang-format on
 
 AocDays::AocDays()
 {
@@ -29,6 +35,7 @@ AocDays::AocDays()
     m_days[8] = new AocDay8();
     m_days[9] = new AocDay9();
     m_days[10] = new AocDay10();
+    m_days[11] = new AocDay11();
 }
 
 AocDays::~AocDays()

@@ -5,7 +5,7 @@
 #include "aoc_day_10.h"
 #include "file_utils.h"
 
-enum class Bracket: unsigned int
+enum class Bracket : unsigned int
 {
     Round = 3,
     Square = 57,
@@ -58,36 +58,48 @@ static bool is_corrupted(const std::string &line, unsigned long int &found)
             break;
         case ')':
             top_bracket = brackets.top();
-            if (top_bracket == Bracket::Round) {
+            if (top_bracket == Bracket::Round)
+            {
                 brackets.pop();
-            } else {
+            }
+            else
+            {
                 found = static_cast<unsigned long int>(Bracket::Round);
                 return true;
             }
             break;
         case ']':
             top_bracket = brackets.top();
-            if (top_bracket == Bracket::Square) {
+            if (top_bracket == Bracket::Square)
+            {
                 brackets.pop();
-            } else {
+            }
+            else
+            {
                 found = static_cast<unsigned long int>(Bracket::Square);
                 return true;
             }
             break;
         case '}':
             top_bracket = brackets.top();
-            if (top_bracket == Bracket::Curly) {
+            if (top_bracket == Bracket::Curly)
+            {
                 brackets.pop();
-            } else {
+            }
+            else
+            {
                 found = static_cast<unsigned long int>(Bracket::Curly);
                 return true;
             }
             break;
         case '>':
             top_bracket = brackets.top();
-            if (top_bracket == Bracket::Pointy) {
+            if (top_bracket == Bracket::Pointy)
+            {
                 brackets.pop();
-            } else {
+            }
+            else
+            {
                 found = static_cast<unsigned long int>(Bracket::Pointy);
                 return true;
             }

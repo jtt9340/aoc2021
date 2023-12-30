@@ -11,20 +11,8 @@
 // See https://stackoverflow.com/a/51167258
 constexpr BingoBoard::board_mask BingoBoard::bitset_mask;
 
-BingoBoard::BingoBoard()
-{
-    std::fill(std::begin(board), std::end(board), 0);
-}
-
-BingoBoard::reference BingoBoard::operator()(BingoBoard::size_type row, BingoBoard::size_type col)
-{
-    return board.at(BingoBoard::cols * row + col);
-}
-
-BingoBoard::const_reference BingoBoard::operator()(BingoBoard::size_type row, BingoBoard::size_type col) const
-{
-    return board.at(BingoBoard::cols * row + col);
-}
+// Needed because otherwise the line `in >> board;` in std::istream &operator>>(std::istream &, BingoBoard &) will cause a linker error
+template std::istream &operator>><unsigned, 5, 5>(std::istream &in, Matrix<unsigned, 5, 5> &m);
 
 bool BingoBoard::mark(BingoBoard::value_type num)
 {
@@ -97,8 +85,8 @@ BingoBoard::value_type BingoBoard::score(BingoBoard::value_type winning_number) 
 std::ostream &operator<<(std::ostream &out, BingoBoard &curr)
 {
     std::array<BingoBoard::value_type, BingoBoard::rows * BingoBoard::cols> digit_counts;
-    std::transform(std::cbegin(curr.board),
-                   std::cend(curr.board),
+    std::transform(std::cbegin(curr.arr),
+                   std::cend(curr.arr),
                    std::begin(digit_counts),
                    [](BingoBoard::value_type value) -> BingoBoard::value_type
                    {
@@ -126,21 +114,6 @@ std::ostream &operator<<(std::ostream &out, BingoBoard &curr)
         out << '\n';
     }
     return out;
-}
-
-std::istream &operator>>(std::istream &in, BingoBoard &curr)
-{
-    for (auto i = 0; i < BingoBoard::rows; i++)
-    {
-        for (auto j = 0; j < BingoBoard::cols; j++)
-        {
-            BingoBoard::value_type number;
-            in >> number;
-            curr(i, j) = number;
-        }
-    }
-
-    return in;
 }
 
 void BingoGame::mark(BingoBoard::value_type val)

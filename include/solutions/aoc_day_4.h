@@ -2,26 +2,15 @@
 #include <bitset>
 #include <fstream>
 
+#include "aoc_days.h"
+#include "matrix.h"
+
 #ifndef __AOC_DAY_4__
 #define __AOC_DAY_4__
 
-#include "aoc_days.h"
-
-class BingoBoard
+class BingoBoard : public Matrix<unsigned, 5, 5>
 {
 public:
-    static constexpr size_t rows = 5;
-    static constexpr size_t cols = 5;
-    using value_type = unsigned;
-    using size_type = size_t;
-    using reference = value_type &;
-    using const_reference = const value_type &;
-
-    BingoBoard();
-
-    reference operator()(size_type row, size_type col);
-    const_reference operator()(size_type row, size_type col) const;
-
     bool mark(value_type num);
     bool is_marked(size_type row, size_type col) const;
 
@@ -34,8 +23,6 @@ public:
 private:
     using board_mask = std::bitset<BingoBoard::rows * BingoBoard::cols>;
     static constexpr board_mask bitset_mask{0b11111 << (BingoBoard::rows - 1) * BingoBoard::cols};
-    // Board has 5x5 squares
-    std::array<BingoBoard::value_type, BingoBoard::rows * BingoBoard::cols> board;
     board_mask marked;
 
     bool won_rows() const;
@@ -43,7 +30,6 @@ private:
 };
 
 std::ostream &operator<<(std::ostream &out, BingoBoard &curr);
-std::istream &operator>>(std::istream &in, BingoBoard &curr);
 
 class BingoGame
 {

@@ -52,3 +52,5 @@
 10,1,test_cases/day10_test2.txt,290691
 10,2,test_cases/day10_test1.txt,288957
 10,2,test_cases/day10_test2.txt,2768166558
+11,1,test_cases/day11_test1.txt,1656
+11,1,test_cases/day11_test2.txt,1661

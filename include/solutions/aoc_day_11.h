@@ -25,7 +25,7 @@ class DumboOctopuses : public Matrix<DumboOctopus, 10, 10>
     void flash(size_type i, size_type j);
 
 public:
-    std::uint64_t step();
+    std::pair<std::uint64_t, bool> step();
 };
 
 std::istream &operator>>(std::istream &in, DumboOctopuses &ocotpi);
@@ -36,6 +36,7 @@ public:
     AocDay11();
     ~AocDay11() = default;
     std::string part1(std::string &filename, std::vector<std::string> &extra_args) override;
+    std::string part2(std::string &filename, std::vector<std::string> &extra_args) override;
 };
 
 #endif

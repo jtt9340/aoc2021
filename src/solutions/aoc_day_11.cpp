@@ -60,7 +60,7 @@ void DumboOctopuses::flash(DumboOctopuses::size_type i, DumboOctopuses::size_typ
         flash(i + 1, j + 1);
 }
 
-std::uint64_t DumboOctopuses::step()
+std::pair<std::uint64_t, bool> DumboOctopuses::step()
 {
     for (auto i = 0; i < DumboOctopuses::rows; i++)
     {
@@ -72,19 +72,25 @@ std::uint64_t DumboOctopuses::step()
         }
     }
 
+    bool all_flashed = true;
+
     // "Any octopus that flashed during this step has its energy level set to 0"
     std::for_each(std::begin(arr),
                   std::end(arr),
-                  [](DumboOctopus &octopus)
+                  [&all_flashed](DumboOctopus &octopus)
                   {
                       if (octopus.flashed)
                       {
                           octopus.flashed = false;
                           octopus.energy_level = 0;
                       }
+                      else
+                      {
+                          all_flashed = false;
+                      }
                   });
 
-    return flashes;
+    return std::make_pair(flashes, all_flashed);
 }
 
 std::istream &operator>>(std::istream &in, DumboOctopuses &octopi)
@@ -116,14 +122,25 @@ std::string AocDay11::part1(std::string &filename, std::vector<std::string> &ext
 
     std::uint64_t flash_count;
     for (auto i = 0; i < num_iterations; i++)
-#ifdef DEBUG_OTHER
     {
-#endif
-        flash_count = octopi.step();
+        flash_count = octopi.step().first;
 #ifdef DEBUG_OTHER
         std::cout << octopi << std::endl;
-    }
 #endif
+    }
 
     return std::to_string(flash_count);
+}
+
+std::string AocDay11::part2(std::string &filename, std::vector<std::string> &extra_args)
+{
+    std::ifstream input{filename};
+    DumboOctopuses octopi;
+    input >> octopi;
+
+    for (auto i = 1;; i++)
+        if (octopi.step().second)
+            return std::to_string(i);
+
+    return "";
 }
